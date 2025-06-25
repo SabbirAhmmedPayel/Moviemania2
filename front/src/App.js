@@ -1,27 +1,79 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useNavigate,
+} from "react-router-dom";
 
-import Signin from './components/Signin';
-import Signup from './components/Signup';
-import './App.css';
+import Header from "./components/Header"; // Import Header component
+import SearchBox from "./components/SearchBox";
+import Home from "./components/Home";
+import SignUp from "./components/Signup";
+import SignIn from "./components/Signin";
+import MovieDetails from "./components/MovieDetails";
+import UserPage from "./components/UserPage";
+import AllMovies from "./components/AllMovies";
+import SearchResults from "./components/SearchResults";
+
+import "./App.css";
 
 function App() {
-  return (
-    <Router>
-      <div>
-        <nav style={{ marginBottom: '20px' }}>
-          <Link to="/signin" style={{ marginRight: '10px' }}>Sign In</Link>
-          <Link to="/signup">Sign Up</Link>
-        </nav>
+  const [loggedInUser, setLoggedInUser] = useState(null);
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    const storedUser = localStorage.getItem("loggedInUser");
+    if (storedUser) {
+      setLoggedInUser(JSON.parse(storedUser));
+    }
+  }, []);
+
+  const handleLogin = (userData) => {
+    setLoggedInUser(userData);
+    localStorage.setItem("loggedInUser", JSON.stringify(userData));
+    navigate("/user");
+  };
+
+  const handleLogout = () => {
+    setLoggedInUser(null);
+    localStorage.removeItem("loggedInUser");
+    navigate("/");
+  };
+
+  return (
+    <div className="App">
+      {/* Pass loggedInUser prop to Header */}
+      <Header loggedInUser={loggedInUser} />
+
+      <SearchBox />
+
+      <main>
         <Routes>
-          <Route path="/signin" element={<Signin />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="*" element={<h2>Welcome! Please Sign In or Sign Up.</h2>} />
+          <Route path="/" element={<Home />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/signin" element={<SignIn onLogin={handleLogin} />} />
+          <Route path="/movie/:title" element={<MovieDetails />} />
+          <Route
+            path="/user"
+            element={<UserPage user={loggedInUser} onLogout={handleLogout} />}
+          />
+          <Route path="/allmovies" element={<AllMovies />} />
+          <Route path="/search" element={<SearchResults />} />
         </Routes>
-      </div>
-    </Router>
+      </main>
+
+      <footer>
+        <p>&copy; 2025 Moviemania. All rights reserved.</p>
+      </footer>
+    </div>
   );
 }
 
-export default App;
+export default function AppWrapper() {
+  return (
+    <Router>
+      <App />
+    </Router>
+  );
+}
