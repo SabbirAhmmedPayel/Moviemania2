@@ -1,0 +1,100 @@
+/* Global styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to bottom right, #0d47a1, #1976d2);
+  color: #ffffff;
+  min-height: 100vh;
+}
+
+/* Navigation bar */
+nav {
+  background-color: rgba(0, 0, 50, 0.2);
+  padding: 16px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+nav a {
+  color: #ffffff;
+  font-size: 18px;
+  margin: 0 15px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: #bbdefb;
+}
+
+/* Form container */
+.form-container {
+  max-width: 400px;
+  margin: 60px auto;
+  padding: 30px 25px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(5px);
+}
+
+/* Form title */
+.form-container h2 {
+  text-align: center;
+  margin-bottom: 24px;
+  color: #ffffff;
+}
+
+/* Input fields */
+.form-container input {
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  border: none;
+  border-radius: 6px;
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  font-size: 15px;
+  transition: background-color 0.3s;
+}
+
+.form-container input::placeholder {
+  color: #e0e0e0;
+}
+
+.form-container input:focus {
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+/* Submit button */
+.form-container button {
+  width: 100%;
+  padding: 12px;
+  background-color: #1e88e5;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form-container button:hover {
+  background-color: #1565c0;
+}
+
+/* Message display */
+.message {
+  text-align: center;
+  margin-top: 16px;
+  font-weight: 600;
+  color: #ffcccb; /* red for error by default */
+}
+
+.message.success {
+  color: #c8e6c9; /* green for success */
+}
