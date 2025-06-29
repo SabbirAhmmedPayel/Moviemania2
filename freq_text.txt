@@ -1,0 +1,10 @@
+git add .
+git commit -m "now"
+git push
+
+
+cd front
+npm start
+
+
+node server

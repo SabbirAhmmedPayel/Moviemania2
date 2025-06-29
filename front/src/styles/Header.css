@@ -1,0 +1,32 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #111;
+  color: #fff;
+}
+
+.logo {
+  font-size: 1.8rem;
+}
+
+nav a {
+  color: #fff;
+  margin-left: 1.5rem;
+  text-decoration: none;
+}
+
+.loggeduser {
+  font-size: 1rem;
+  padding: 0.4rem 0.8rem;
+  background-color: #00bcd4;
+  color: white;
+  border-radius: 12px;
+  font-weight: bold;
+  transition: background 0.2s ease-in-out;
+}
+
+.loggeduser {
+  background-color: #0097a7;
+}

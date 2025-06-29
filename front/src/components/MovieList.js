@@ -1,72 +1,39 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import "../styles/MovieList.css";
 
 function MovieList({ movies }) {
   if (!movies || movies.length === 0) {
-    return <p>No movies available.</p>;
+    return <p className="no-movies">No movies available.</p>;
   }
 
   return (
-    <div className="movie-grid" style={styles.grid}>
+    <div className="movie-grid">
       {movies.map((movie) => (
-        <div key={movie.id} style={styles.card}>
+        <div key={movie.id} className="movie-card">
           {movie.poster_url ? (
             <img
               src={movie.poster_url}
               alt={movie.title}
-              style={styles.poster}
+              className="movie-poster"
             />
           ) : (
-            <div style={styles.noImage}>No Image</div>
+            <div className="no-image">No Image</div>
           )}
-          <h3 style={styles.title}>{movie.title}</h3>
-          <p style={styles.rating}>Rating: {movie.rating || "N/A"}</p>
-          
+          <h3 className="movie-title">
+            <Link to={`/movies/${movie.id}`} className="movie-link">
+              {movie.title} ({movie.year})
+            </Link>
+          </h3>
+          <p className="movie-rating">⭐ Rating: {movie.rating || "N/A"} /10</p>
+          <p className="movie-votes">Votes: {movie.votes}</p>
+          <p className="movie-label">
+            {movie.runtime} min • {movie.rating_label}
+          </p>
         </div>
       ))}
     </div>
   );
 }
-
-const styles = {
-  grid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))",
-    gap: "1.5rem",
-    padding: "1rem",
-  },
-  card: {
-    backgroundColor: "#f0f8ff",
-    borderRadius: "8px",
-    boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-    padding: "1rem",
-    textAlign: "center",
-  },
-  poster: {
-    width: "100%",
-    height: "270px",
-    objectFit: "cover",
-    borderRadius: "6px",
-  },
-  noImage: {
-    width: "100%",
-    height: "270px",
-    backgroundColor: "#ccc",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: "6px",
-    color: "#666",
-  },
-  title: {
-    margin: "0.5rem 0 0.25rem",
-    fontSize: "1.1rem",
-    color: "#003366",
-  },
-  rating: {
-    margin: 0,
-    fontSize: "0.9rem",
-    color: "#0077cc",
-  },
-};
 
 export default MovieList;

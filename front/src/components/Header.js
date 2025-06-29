@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import '../styles/Header.css';
 
 function Header({ loggedInUser }) {
   return (
@@ -15,7 +16,7 @@ function Header({ loggedInUser }) {
 
       <div className="header-right">
         {loggedInUser ? (
-          <Link to="/user" className="logged-user">
+          <Link to="/user" className="loggeduser">
             {loggedInUser.username}
           </Link>
         ) : (

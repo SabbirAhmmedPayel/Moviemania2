@@ -60,6 +60,8 @@ function App() {
           />
           <Route path="/allmovies" element={<AllMovies />} />
           <Route path="/search" element={<SearchResults />} />
+          <Route path="/movies/:id" element={<MovieDetails />} />
+
         </Routes>
       </main>
 

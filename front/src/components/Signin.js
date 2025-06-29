@@ -1,7 +1,8 @@
 // src/components/Signin.js
 import React, { useState } from 'react';
 
-function Signin() {
+function Signin({ onLogin }) {
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -16,7 +17,7 @@ function Signin() {
 
     if (res.ok) {
       setMessage(`Welcome, ${data.user.Name}!`);
-      // You can store user info, redirect, etc.
+       onLogin(data.user);
     } else {
       setMessage(data.error || 'Signin failed');
     }

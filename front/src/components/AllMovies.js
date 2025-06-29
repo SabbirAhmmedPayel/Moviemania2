@@ -1,5 +1,9 @@
+//this directory /src/components/AllMovies.js
+
 import React, { useEffect, useState } from 'react';
 import MovieList from './MovieList';
+
+
 
 function AllMovies() {
   const [movies, setMovies] = useState([]);
