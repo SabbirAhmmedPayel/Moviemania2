@@ -4,7 +4,7 @@ import "../styles/MovieList.css";
 
 function MovieList({ movies }) {
   if (!movies || movies.length === 0) {
-    return <p className="no-movies">No movies available.</p>;
+    return <p className="no-movies">loading....</p>;
   }
 
   return (

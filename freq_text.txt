@@ -3,8 +3,10 @@ git commit -m "now"
 git push
 
 
+node server
+
 cd front
 npm start
 
 
-node server
+npm start

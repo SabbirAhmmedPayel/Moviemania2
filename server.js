@@ -2,6 +2,11 @@ const express = require('express');
 const app = express();
 const authRoutes = require('./routes/auth');
 const movieRoutes = require('./routes/movies');
+const watchlistRoutes = require('./routes/watchlists');
+
+
+
+
 
 
 const cors = require('cors');
@@ -12,6 +17,8 @@ app.use(express.json());
 // Use auth routes with prefix /auth
 app.use('/auth', authRoutes);
 app.use('/api/movies', movieRoutes);
+app.use('/api/watchlists', watchlistRoutes);
+
 
 
 const PORT = process.env.PORT || 3000;

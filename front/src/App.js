@@ -16,6 +16,9 @@ import UserPage from "./components/UserPage";
 import AllMovies from "./components/AllMovies";
 import SearchResults from "./components/SearchResults";
 
+
+import { UserContext } from './contexts/UserContext';
+
 import "./App.css";
 
 function App() {
@@ -42,10 +45,12 @@ function App() {
   };
 
   return (
+
+    <UserContext.Provider value={{ loggedInUser, setLoggedInUser }}>
+      
     <div className="App">
       {/* Pass loggedInUser prop to Header */}
       <Header loggedInUser={loggedInUser} />
-
       <SearchBox />
 
       <main>
@@ -69,6 +74,7 @@ function App() {
         <p>&copy; 2025 Moviemania. All rights reserved.</p>
       </footer>
     </div>
+    </UserContext.Provider>
   );
 }
 

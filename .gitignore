@@ -1,5 +1,6 @@
 # Node modules folder (do not push dependencies)
 node_modules/
+front/node_modules/
 
 # Build output folders
 build/
