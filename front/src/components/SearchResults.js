@@ -29,7 +29,7 @@ function SearchResults() {
 
   if (!searchTerm) return <p>Please enter a search term.</p>;
   if (error) return <p>{error}</p>;
-  if (movies.length === 0) return <p>No movies found for "{searchTerm}".</p>; // ✅ Add this here
+  if (movies.length === 0) return <p>Loading movies found for "{searchTerm}".</p>; // ✅ Add this here
 
   return (
     <div style={{ padding: '2rem' }}>

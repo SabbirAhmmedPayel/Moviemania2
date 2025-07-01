@@ -1,5 +1,7 @@
 // src/components/Signin.js
 import React, { useState } from 'react';
+import '../styles/Signin.css';
+
 
 function Signin({ onLogin }) {
 

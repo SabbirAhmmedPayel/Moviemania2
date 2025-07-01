@@ -92,6 +92,8 @@ function Signup() {
         {message}
       </p>
     </div>
+
+    
   );
 }
 

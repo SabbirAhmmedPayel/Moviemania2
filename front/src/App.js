@@ -15,6 +15,8 @@ import MovieDetails from "./components/MovieDetails";
 import UserPage from "./components/UserPage";
 import AllMovies from "./components/AllMovies";
 import SearchResults from "./components/SearchResults";
+import WatchlistMovies from './components/WatchlistMovies';
+
 
 
 import { UserContext } from './contexts/UserContext';
@@ -66,6 +68,9 @@ function App() {
           <Route path="/allmovies" element={<AllMovies />} />
           <Route path="/search" element={<SearchResults />} />
           <Route path="/movies/:id" element={<MovieDetails />} />
+
+          <Route path="/watchlist/:watchlistId" element={<WatchlistMovies />} />
+
 
         </Routes>
       </main>
