@@ -2,6 +2,11 @@
 node_modules/
 front/node_modules/
 
+/node_modules/
+
+# Ignore node_modules in any subdirectory (like front/node_modules)
+**/node_modules/
+
 # Build output folders
 build/
 dist/
