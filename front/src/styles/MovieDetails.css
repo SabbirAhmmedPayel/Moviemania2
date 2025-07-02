@@ -215,3 +215,43 @@
 .dropdown-button.remove:hover {
   background-color: #ff1a1a;
 }
+
+
+
+
+.movie-cast-container {
+  margin-top: 1rem;
+}
+
+.cast-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.cast-member {
+  width: 120px;
+  text-align: center;
+}
+
+.cast-photo {
+  width: 100px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.cast-name {
+  font-weight: bold;
+  margin: 0.5rem 0 0 0;
+  cursor: pointer;
+  color: #007bff;
+  text-decoration: underline;
+}
+
+.cast-role {
+  font-size: 0.85rem;
+  color: #666;
+}

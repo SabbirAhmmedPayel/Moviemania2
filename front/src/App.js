@@ -18,8 +18,8 @@ import SearchResults from "./components/SearchResults";
 import WatchlistMovies from './components/WatchlistMovies';
 import ReviewList from "./components/ReviewList";
 import UserReviewsPage from "./components/UserReviewsPage";
-
-
+import PersonPage from "./components/PersonPage";
+import UpcomingPage from './components/UpcomingPage';
 
 import { UserContext } from './contexts/UserContext';
 
@@ -74,8 +74,8 @@ function App() {
           <Route path="/watchlist/:watchlistId" element={<WatchlistMovies />} />
           <Route path="/movies/:id/reviews" element={<ReviewList />} />
     <Route path="/user-reviews/:username" element={<UserReviewsPage />} />
-
-
+        <Route path="/persons/:personId" element={<PersonPage />} />
+<Route path="/upcoming" element={<UpcomingPage />} />
         </Routes>
       </main>
 

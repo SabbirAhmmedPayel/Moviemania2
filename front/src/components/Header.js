@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/Header.css';
+// add news link rightside of upcoming and implement upcoming
 
 function Header({ loggedInUser }) {
   return (

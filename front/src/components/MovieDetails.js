@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import '../styles/MovieDetails.css';
 import '../styles/MovieDetails.css';
 import '../styles/RateModal.css';
+
+import MovieCast from './MovieCast';
 
 import { useUser } from '../contexts/UserContext';
 
@@ -10,6 +13,8 @@ function getYouTubeSearchUrl(title, year) {
   const query = encodeURIComponent(`${title} ${year} trailer`);
   return `https://www.youtube.com/results?search_query=${query}`;
 }
+
+
 
 function MovieDetails() {
   const { id } = useParams();
@@ -267,13 +272,15 @@ function MovieDetails() {
         )}
 
       </div>
-
+{movie && <MovieCast movieId={movie.id} />}
       <div className="movie-links">
         <a href={`/movies/${movie.id}/reviews`} className="details-link">📝 Check Reviews</a>
-        <a href={`/movies/${movie.id}/cast`} className="details-link">🎭 See Full Cast</a>
+      
         <a href={`/movies/${movie.id}/similar`} className="details-link">🎞️ Similar Movies</a>
       </div>
     </div >
+
+    
   );
 }
 

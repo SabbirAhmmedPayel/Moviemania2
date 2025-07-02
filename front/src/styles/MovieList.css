@@ -80,3 +80,21 @@
   padding: 1rem;
   color: white;
 }
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 1rem;
+  align-items: center;
+}
+
+.controls label {
+  font-weight: bold;
+}
+
+.controls select,
+.controls input {
+  padding: 0.4rem 0.6rem;
+  font-size: 1rem;
+  border-radius: 5px;
+}

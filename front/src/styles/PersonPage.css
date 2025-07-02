@@ -1,0 +1,88 @@
+.person-page {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background-color: #b82b2b;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.person-header {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #ee2323;
+  padding-bottom: 1rem;
+}
+
+.person-photo {
+  width: 180px;
+  height: auto;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.person-details {
+  flex: 1;
+}
+
+.person-details h2 {
+  margin: 0;
+  font-size: 2rem;
+  color: #333;
+}
+
+.person-details p {
+  margin: 0.5rem 0;
+  color: #555;
+  font-size: 1rem;
+}
+
+.movie-list-section {
+  margin-top: 2rem;
+}
+
+.movie-list-section h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #222;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 0.5rem;
+}
+
+.movie-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.movie-item {
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  transition: background-color 0.2s ease;
+}
+
+.movie-item:hover {
+  background-color: #f0f0f0;
+}
+
+.movie-item a {
+  font-weight: 600;
+  text-decoration: none;
+  color: #0077cc;
+}
+
+.movie-item a:hover {
+  text-decoration: underline;
+}
+
+.role-description {
+  font-style: italic;
+  color: #666;
+  margin-left: 8px;
+}
