@@ -104,3 +104,18 @@
 .logout-btn:hover {
   background-color: darkred;
 }
+.reviews-btn {
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.reviews-btn:hover {
+  background-color: #0056b3;
+}

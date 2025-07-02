@@ -3,7 +3,7 @@ const app = express();
 const authRoutes = require('./routes/auth');
 const movieRoutes = require('./routes/movies');
 const watchlistRoutes = require('./routes/watchlists');
-
+const reviewRoutes = require('./routes/reviews');
 
 
 
@@ -18,7 +18,7 @@ app.use(express.json());
 app.use('/auth', authRoutes);
 app.use('/api/movies', movieRoutes);
 app.use('/api/watchlists', watchlistRoutes);
-
+app.use('/api/reviews', reviewRoutes);
 
 
 const PORT = process.env.PORT || 3000;

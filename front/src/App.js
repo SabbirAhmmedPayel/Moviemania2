@@ -16,6 +16,8 @@ import UserPage from "./components/UserPage";
 import AllMovies from "./components/AllMovies";
 import SearchResults from "./components/SearchResults";
 import WatchlistMovies from './components/WatchlistMovies';
+import ReviewList from "./components/ReviewList";
+import UserReviewsPage from "./components/UserReviewsPage";
 
 
 
@@ -70,6 +72,8 @@ function App() {
           <Route path="/movies/:id" element={<MovieDetails />} />
 
           <Route path="/watchlist/:watchlistId" element={<WatchlistMovies />} />
+          <Route path="/movies/:id/reviews" element={<ReviewList />} />
+    <Route path="/user-reviews/:username" element={<UserReviewsPage />} />
 
 
         </Routes>

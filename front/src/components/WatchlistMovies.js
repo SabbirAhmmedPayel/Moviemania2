@@ -4,8 +4,6 @@ import MovieList from './MovieList'; // reuse your movie grid display component
 
 
 
-
-
 function WatchlistMovies() {
   const { watchlistId } = useParams();
   const [movies, setMovies] = useState([]);
@@ -25,16 +23,15 @@ function WatchlistMovies() {
       }
     }
 
-    async function fetchListName() {
-      try {
-        const res = await fetch(`http://localhost:3000/api/watchlists/user/`);
-        const data = await res.json();
-        const target = data.find(list => list.id === watchlistId);
-        setListname(target?.listname || '');
-      } catch (err) {
-        console.error('Failed to get watchlist name');
-      }
-    }
+  async function fetchListName() {
+  try {
+    const res = await fetch(`http://localhost:3000/api/watchlists/${watchlistId}`);
+    const data = await res.json();
+    setListname(data.listname || '');
+  } catch (err) {
+    console.error('Failed to get watchlist name');
+  }
+}
 
     fetchMovies();
     fetchListName();
@@ -45,7 +42,7 @@ function WatchlistMovies() {
   return (
     <div>
       <h2 style={{ textAlign: 'center', marginTop: '1rem' }}>
-        🎞️ Movies in "{listname}" Watchlist
+        🎞️ Movies in {listname} 
       </h2>
       <MovieList movies={movies} />
     </div>

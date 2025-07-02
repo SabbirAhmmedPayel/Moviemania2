@@ -112,6 +112,13 @@ function UserPage({ user, onLogout }) {
           </div>
         )}
       </div>
+
+      <div className="user-actions">
+        <Link to={`/user-reviews/${user.username}`}>
+          <button className="reviews-btn">📝 Check Past Reviews</button>
+        </Link>
+      </div>
+
     </div>
   );
 }

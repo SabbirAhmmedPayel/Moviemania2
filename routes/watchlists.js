@@ -131,4 +131,27 @@ router.delete('/:watchlistId/movies/:movieId', async (req, res) => {
 });
 
 
+// ✅ GET single watchlist by ID
+router.get('/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const result = await pool.query(
+      'SELECT * FROM watchlists WHERE id = $1',
+      [id]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Watchlist not found' });
+    }
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error('Error fetching watchlist by ID:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
+
 module.exports = router;
