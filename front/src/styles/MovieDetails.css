@@ -1,5 +1,5 @@
 .movie-details {
-  max-width: 800px;
+  max-width: 1200px;
   margin: 40px auto;
   background: rgba(30, 42, 58, 0.9);
   backdrop-filter: blur(6px);
@@ -36,20 +36,7 @@
   text-decoration: underline;
 }
 
-.movie-details-poster {
-  width: 100%;
-  max-width: 400px;
-  height: 600px;
-  border-radius: 12px;
-  margin-bottom: 24px;
-  transition: transform 0.3s ease;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-    object-fit: contain;
-}
 
-.movie-details-poster:hover {
-  transform: scale(1.03);
-}
 
 .movie-details h1 {
   font-size: 2rem;
@@ -254,4 +241,70 @@
 .cast-role {
   font-size: 0.85rem;
   color: #666;
+}
+
+
+.movie-details-poster {
+  width: 100%;
+  max-width: 400px;
+  height: 600px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  transition: transform 0.3s ease;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  object-fit: contain;
+   
+    
+}
+
+.movie-details-poster:hover {
+  transform: scale(1.03);
+}
+
+.poster-trailer-container {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+  flex-wrap: nowrap; /* no wrapping */
+  justify-content: flex-start; /* align left */
+  width: 100%;
+  max-width: 1100px; /* enough space to hold poster + trailer */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.poster-trailer-container img {
+  width: 280px; /* fixed width for poster */
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  object-fit: contain;
+  flex-shrink: 0; /* prevent shrinking */
+}
+
+.poster-trailer-container iframe {
+  width: 760px; /* fixed width for trailer */
+  height: 315px; /* 16:9 ratio */
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  border: none;
+  flex-shrink: 0; /* prevent shrinking */
+}
+
+@media (max-width: 900px) {
+  .poster-trailer-container {
+    max-width: 100%;
+    justify-content: center;
+  }
+  .poster-trailer-container img,
+  .poster-trailer-container iframe {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    flex-shrink: 1;
+  }
+  .poster-trailer-container {
+    flex-wrap: wrap; /* stack on smaller screens */
+  }
 }

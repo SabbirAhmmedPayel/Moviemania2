@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import '../styles/MovieDetails.css';
 import '../styles/MovieDetails.css';
 import '../styles/RateModal.css';
 
@@ -9,56 +7,41 @@ import MovieCast from './MovieCast';
 
 import { useUser } from '../contexts/UserContext';
 
-function getYouTubeSearchUrl(title, year) {
-  const query = encodeURIComponent(`${title} ${year} trailer`);
-  return `https://www.youtube.com/results?search_query=${query}`;
+// Helper to extract video ID from YouTube URL
+function getYouTubeVideoId(url) {
+  const regExp = /(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+  const match = url?.match(regExp);
+  return match ? match[1] : null;
 }
 
-
+// Generate YouTube embed URL from trailer_link
+function getYouTubeEmbedUrlFromLink(trailerLink) {
+  const videoId = getYouTubeVideoId(trailerLink);
+  if (!videoId) return null;
+  return `https://www.youtube.com/embed/${videoId}?autoplay=0&mute=1&rel=0&showinfo=0&modestbranding=1`;
+}
 
 function MovieDetails() {
   const { id } = useParams();
   const { loggedInUser } = useUser();
+
+  // State hooks - always at top level!
   const [movie, setMovie] = useState(null);
   const [watchlists, setWatchlists] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-
+  // Rating modal states
   const [showRateModal, setShowRateModal] = useState(false);
   const [selectedRating, setSelectedRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
   const [textReview, setTextReview] = useState('');
 
-  const handleSubmitReview = async () => {
-    if (selectedRating === 0) return alert("Please select a rating.");
+  const [removingFromListId, setRemovingFromListId] = useState(null);
 
-    try {
-      const res = await fetch('http://localhost:3000/api/reviews', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          movie_id: movie.id,
-          username: loggedInUser.username,
-          rating: selectedRating,
-          text_review: textReview
-        }),
-      });
+  // Compute trailer embed URL safely
+  const trailerEmbedUrl = getYouTubeEmbedUrlFromLink(movie?.trailer_link);
 
-      const data = await res.json();
-      if (res.ok) {
-        alert('Review submitted successfully!');
-        setShowRateModal(false);
-        setSelectedRating(0);
-        setTextReview('');
-      } else {
-        alert(data.error || 'Failed to submit review');
-      }
-    } catch (err) {
-      console.error('Submit error:', err);
-      alert('Error submitting review');
-    }
-  };
   // Fetch movie details
   useEffect(() => {
     async function fetchMovie() {
@@ -75,33 +58,6 @@ function MovieDetails() {
     }
     fetchMovie();
   }, [id]);
-
-  const [removingFromListId, setRemovingFromListId] = useState(null);
-
-  const handleRemove = async (watchlistId, listname) => {
-    if (!loggedInUser) return alert('Please sign in');
-
-    if (!window.confirm(`Remove this movie from ${listname}?`)) return;
-
-    setRemovingFromListId(watchlistId);
-    try {
-      const res = await fetch(`http://localhost:3000/api/watchlists/${watchlistId}/movies/${movie.id}`, {
-        method: 'DELETE',
-      });
-      const data = await res.json();
-
-      if (res.ok) {
-        alert(data.message || `Removed from ${listname}`);
-      } else {
-        alert(data.error || `Current movie is not in ${listname} `);
-      }
-    } catch (err) {
-      alert('Failed to remove movie.');
-    } finally {
-      setRemovingFromListId(null);
-    }
-  };
-
 
   // Fetch user watchlists
   useEffect(() => {
@@ -133,19 +89,90 @@ function MovieDetails() {
     }
   };
 
+  const handleRemove = async (watchlistId, listname) => {
+    if (!loggedInUser) return alert('Please sign in');
+    if (!window.confirm(`Remove this movie from ${listname}?`)) return;
+
+    setRemovingFromListId(watchlistId);
+    try {
+      const res = await fetch(`http://localhost:3000/api/watchlists/${watchlistId}/movies/${movie.id}`, {
+        method: 'DELETE',
+      });
+      const data = await res.json();
+
+      if (res.ok) {
+        alert(data.message || `Removed from ${listname}`);
+      } else {
+        alert(data.error || `Current movie is not in ${listname}`);
+      }
+    } catch (err) {
+      alert('Failed to remove movie.');
+    } finally {
+      setRemovingFromListId(null);
+    }
+  };
+
+  const handleSubmitReview = async () => {
+    if (selectedRating === 0) return alert("Please select a rating.");
+
+    try {
+      const res = await fetch('http://localhost:3000/api/reviews', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          movie_id: movie.id,
+          username: loggedInUser.username,
+          rating: selectedRating,
+          text_review: textReview
+        }),
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        alert('Review submitted successfully!');
+        setShowRateModal(false);
+        setSelectedRating(0);
+        setTextReview('');
+      } else {
+        alert(data.error || 'Failed to submit review');
+      }
+    } catch (err) {
+      console.error('Submit error:', err);
+      alert('Error submitting review');
+    }
+  };
+
+  // Early returns to avoid rendering when data is loading or missing
   if (loading) return <p>Loading movie details...</p>;
   if (error) return <p>Error: {error}</p>;
   if (!movie) return <p>No movie data found.</p>;
 
   return (
     <div className="movie-details">
-      {movie.poster_url && (
-        <img
-          src={movie.poster_url}
-          alt={movie.title}
-          className="movie-details-poster"
-        />
-      )}
+      <div className="poster-trailer-container" style={{ display: 'flex', gap: '1.5rem', alignItems: 'flex-start', flexWrap: 'wrap' }}>
+        {movie.poster_url && (
+          <img
+            src={movie.poster_url}
+            alt={movie.title}
+            className="movie-details-poster"
+            style={{ maxWidth: '300px', borderRadius: '8px' }}
+          />
+        )}
+
+        {trailerEmbedUrl ? (
+          <iframe
+            src={trailerEmbedUrl}
+            title={`${movie.title} Trailer`}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            width="560"
+            height="315"
+            style={{ borderRadius: '8px' }}
+          />
+        ) : (
+          <p>No trailer available</p>
+        )}
+      </div>
 
       <h1>{movie.title} ({movie.year})</h1>
 
@@ -165,7 +192,6 @@ function MovieDetails() {
             </div>
           </div>
 
-          {/* Remove from Watchlist Dropdown */}
           <div className="dropdown-container" style={{ marginLeft: '1rem' }}>
             <button className="dropdown-button remove">➖ Remove from Watchlist</button>
             <div className="dropdown-menu" aria-label="Remove from watchlist options">
@@ -181,12 +207,7 @@ function MovieDetails() {
             </div>
           </div>
         </>
-      )
-      }
-
-
-
-      {/*  similar to add to watchlist button , remove form watchlist dropdown button and functionality*/}
+      )}
 
       <div className="movie-info-grid">
         <div className="info-item">
@@ -220,35 +241,17 @@ function MovieDetails() {
         </div>
       </div>
 
-
-
-      <a
-        href={getYouTubeSearchUrl(movie.title, movie.year)}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="trailer-button"
-      >
-        🎬 View Trailer
-      </a>
-
-      {/* Placeholder for star rating */}
       <div className="rate-section">
         <button className="rate-btn" onClick={() => setShowRateModal(true)}>⭐ Rate</button>
-        {/* TODO: Implement star popup or modal */}
-
         {showRateModal && (
           <div className="rate-modal-overlay" onClick={() => setShowRateModal(false)}>
             <div className="rate-modal" onClick={(e) => e.stopPropagation()}>
               <h3>Rate {movie.title}</h3>
-
               <div className="stars">
                 {Array.from({ length: 10 }, (_, i) => i + 1).map((star) => (
                   <span
                     key={star}
-
-                    className={`star ${(hoverRating || selectedRating) >= star ? 'filled' : ''
-                      }`}
-
+                    className={`star ${(hoverRating || selectedRating) >= star ? 'filled' : ''}`}
                     onMouseEnter={() => setHoverRating(star)}
                     onMouseLeave={() => setHoverRating(0)}
                     onClick={() => setSelectedRating(star)}
@@ -257,30 +260,26 @@ function MovieDetails() {
                   </span>
                 ))}
               </div>
-
               <textarea
                 placeholder="Write your review..."
                 value={textReview}
                 onChange={(e) => setTextReview(e.target.value)}
               />
-
               <button className="submit-review-btn" onClick={handleSubmitReview}>
                 Submit Review
               </button>
             </div>
           </div>
         )}
-
       </div>
-{movie && <MovieCast movieId={movie.id} />}
+
+      {movie && <MovieCast movieId={movie.id} />}
+
       <div className="movie-links">
         <a href={`/movies/${movie.id}/reviews`} className="details-link">📝 Check Reviews</a>
-      
         <a href={`/movies/${movie.id}/similar`} className="details-link">🎞️ Similar Movies</a>
       </div>
-    </div >
-
-    
+    </div>
   );
 }
 
