@@ -1,18 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/Header.css';
-// add news link rightside of upcoming and implement upcoming
+
+let imglink= "./logo192.png"
 
 function Header({ loggedInUser }) {
   return (
     <header>
       <div className="logo-container">
-        <img src="/images/Logo.png" alt="Moviemania Logo" className="logo" />
+        <img src={imglink} alt="Moviemania Logo" className="logo" />
       </div>
 
-      <nav className="main-nav">
+      <nav className="main-nav" style={{ textAlign : 'centre'}}>
         <Link to="/">Home</Link>
         <Link to="/upcoming">Upcoming</Link>
+        <Link to ="/news">News</Link>
       </nav>
 
       <div className="header-right">

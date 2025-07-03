@@ -1,0 +1,7 @@
+https://youtu.be/bk_q6vW61cs?si=Oqd8_KRXOTZXZIWP
+
+
+how to run ?
+instal npm in front and root 
+
+open terminal in root . type   " npm start "
