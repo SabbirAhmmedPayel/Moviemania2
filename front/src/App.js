@@ -20,6 +20,9 @@ import ReviewList from "./components/ReviewList";
 import UserReviewsPage from "./components/UserReviewsPage";
 import PersonPage from "./components/PersonPage";
 import UpcomingPage from './components/UpcomingPage';
+import MoviesByGenre from './components/MoviesByGenre';
+
+
 
 import { UserContext } from './contexts/UserContext';
 
@@ -76,7 +79,17 @@ function App() {
     <Route path="/user-reviews/:username" element={<UserReviewsPage />} />
         <Route path="/persons/:personId" element={<PersonPage />} />
 <Route path="/upcoming" element={<UpcomingPage />} />
+       
+       
+       
+        <Route path="/genres/:name" element={<MoviesByGenre />} />
+     
+       
         </Routes>
+
+       
+
+
       </main>
 
       <footer>

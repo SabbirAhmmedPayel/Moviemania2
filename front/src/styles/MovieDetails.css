@@ -36,6 +36,20 @@
   text-decoration: underline;
 }
 
+.genre-chip {
+  display: inline-block;
+  background-color: #e0e0e0;
+  color: #222;
+  padding: 6px 10px;
+  border-radius: 12px;
+  margin: 4px;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.genre-chip:hover {
+  background-color: #c5c5c5;
+}
 
 
 .movie-details h1 {

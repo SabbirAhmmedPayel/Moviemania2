@@ -4,6 +4,7 @@ import '../styles/MovieDetails.css';
 import '../styles/RateModal.css';
 
 import MovieCast from './MovieCast';
+import MovieGenres from './MovieGenres';
 
 import { useUser } from '../contexts/UserContext';
 
@@ -24,6 +25,8 @@ function getYouTubeEmbedUrlFromLink(trailerLink) {
 function MovieDetails() {
   const { id } = useParams();
   const { loggedInUser } = useUser();
+  const [showRateForm, setShowRateForm] = useState(false);
+
 
   // State hooks - always at top level!
   const [movie, setMovie] = useState(null);
@@ -32,9 +35,12 @@ function MovieDetails() {
   const [error, setError] = useState(null);
 
   // Rating modal states
-  const [showRateModal, setShowRateModal] = useState(false);
-  const [selectedRating, setSelectedRating] = useState(0);
+ // const [showRateForm, setShowRateForm] = useState(false);
+
   const [hoverRating, setHoverRating] = useState(0);
+
+  const [selectedRating, setSelectedRating] = useState(0);
+
   const [textReview, setTextReview] = useState('');
 
   const [removingFromListId, setRemovingFromListId] = useState(null);
@@ -130,7 +136,7 @@ function MovieDetails() {
       const data = await res.json();
       if (res.ok) {
         alert('Review submitted successfully!');
-        setShowRateModal(false);
+        setShowRateForm(false) ;
         setSelectedRating(0);
         setTextReview('');
       } else {
@@ -176,6 +182,8 @@ function MovieDetails() {
 
       <h1>{movie.title} ({movie.year})</h1>
 
+  <MovieGenres movieId={id} />
+
       {loggedInUser && watchlists.length > 0 && (
         <>
           <div className="dropdown-container">
@@ -216,9 +224,13 @@ function MovieDetails() {
         </div>
 
         <div className="info-item">
-          <strong>⭐ Rating:</strong>
-          <p>{movie.rating || 'N/A'} / 10</p>
-        </div>
+  <strong>⭐ Rating:</strong>
+  <p>
+    {typeof movie.rating === 'number'
+      ? movie.rating.toFixed(2)
+      : 'N/A'} / 10
+  </p>
+</div>
 
         <div className="info-item">
           <strong>🗳️ Votes:</strong>
@@ -241,37 +253,45 @@ function MovieDetails() {
         </div>
       </div>
 
-      <div className="rate-section">
-        <button className="rate-btn" onClick={() => setShowRateModal(true)}>⭐ Rate</button>
-        {showRateModal && (
-          <div className="rate-modal-overlay" onClick={() => setShowRateModal(false)}>
-            <div className="rate-modal" onClick={(e) => e.stopPropagation()}>
-              <h3>Rate {movie.title}</h3>
-              <div className="stars">
-                {Array.from({ length: 10 }, (_, i) => i + 1).map((star) => (
-                  <span
-                    key={star}
-                    className={`star ${(hoverRating || selectedRating) >= star ? 'filled' : ''}`}
-                    onMouseEnter={() => setHoverRating(star)}
-                    onMouseLeave={() => setHoverRating(0)}
-                    onClick={() => setSelectedRating(star)}
-                  >
-                    ⭐
-                  </span>
-                ))}
-              </div>
-              <textarea
-                placeholder="Write your review..."
-                value={textReview}
-                onChange={(e) => setTextReview(e.target.value)}
-              />
-              <button className="submit-review-btn" onClick={handleSubmitReview}>
-                Submit Review
-              </button>
-            </div>
-          </div>
-        )}
+
+<div className="rate-section">
+  <button onClick={() => setShowRateForm(!showRateForm)}>⭐ Rate</button>
+
+  {showRateForm && (
+    <div className="rate-inline-box">
+      <div className="stars">
+        {Array.from({ length: 10 }, (_, i) => {
+          const star = i + 1;
+          const isFilled = hoverRating
+            ? star <= hoverRating
+            : star <= selectedRating;
+
+          return (
+            <span
+  key={star}
+  className={`star ${isFilled ? 'filled' : ''}`}
+  onMouseEnter={() => setHoverRating(star)}
+  onMouseLeave={() => setHoverRating(0)}
+  onClick={() => setSelectedRating(star)}
+>
+  {isFilled ? '★' : '☆'}
+</span>
+
+          );
+        })}
       </div>
+
+      <textarea
+        placeholder="Write your review..."
+        value={textReview}
+        onChange={(e) => setTextReview(e.target.value)}
+      />
+
+      <button onClick={handleSubmitReview}>Submit Review</button>
+    </div>
+  )}
+</div>
+
 
       {movie && <MovieCast movieId={movie.id} />}
 

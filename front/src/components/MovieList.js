@@ -91,7 +91,15 @@ function MovieList({ movies }) {
                 {movie.title} ({movie.year})
               </Link>
             </h3>
-            <p className="movie-rating">⭐ Rating: {movie.rating || "N/A"} /10</p>
+           <p className="movie-rating">
+  ⭐ Rating: {typeof movie.rating === 'number'
+    ? (movie.rating % 1 === 0
+        ? movie.rating
+        : movie.rating.toFixed(2))
+    : 'N/A'} /10
+</p>
+
+
             <p className="movie-votes">Votes: {movie.votes}</p>
             <p className="movie-label">
               {movie.runtime} min • {movie.rating_label}

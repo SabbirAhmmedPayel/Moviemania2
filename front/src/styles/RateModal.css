@@ -1,52 +1,42 @@
-.rate-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+/* Rating section container */
+.rate-section {
+  margin-top: 1rem;
 }
 
-.rate-modal {
-  background: white;
-  padding: 2rem;
-  border-radius: 12px;
-  max-width: 400px;
-  width: 90%;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
-  position: relative;
-}
-
+/* Star styles */
 .stars {
-  margin-bottom: 1rem;
+  margin: 0.5rem 0;
 }
 
 .star {
   font-size: 28px;
   cursor: pointer;
-  color: #ccc;
-  transition: color 0.2s;
+  color: #ccc; /* empty star color */
+  transition: color 0.2s ease;
+  user-select: none;
+  margin-right: 4px;
 }
 
 .star.filled {
-  color: gold;
+  color: rgb(233, 218, 7); /* filled star color */
 }
 
-textarea {
+
+/* Review textarea */
+.rate-inline-box textarea {
   width: 100%;
   min-height: 80px;
   padding: 0.5rem;
-  margin-bottom: 1rem;
-  resize: vertical;
   font-size: 14px;
+  resize: vertical;
+  border: 1px solid #10c7ce;
+  border-radius: 4px;
+  margin-bottom: 1rem;
 }
 
-.submit-review-btn {
-  background-color: #009688;
+/* Submit button */
+.rate-inline-box button {
+  background-color: #0e6ebd;
   color: white;
   border: none;
   padding: 0.6rem 1.2rem;
@@ -56,6 +46,6 @@ textarea {
   transition: background-color 0.2s;
 }
 
-.submit-review-btn:hover {
+.rate-inline-box button:hover {
   background-color: #00796b;
 }

@@ -6,6 +6,8 @@ const watchlistRoutes = require('./routes/watchlists');
 const reviewRoutes = require('./routes/reviews');
 const moviePersonsRoutes = require('./routes/moviePersons');
 const upcomingRoutes = require('./routes/upcoming');
+const genreRoutes = require('./routes/genres');
+
 
 const cors = require('cors');
 app.use(cors());
@@ -18,7 +20,7 @@ app.use('/api/watchlists', watchlistRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/movie-persons', moviePersonsRoutes);
 app.use('/api/upcoming', upcomingRoutes);
-
+app.use('/api/genres', genreRoutes);
 
 
 const PORT = process.env.PORT || 3000;
