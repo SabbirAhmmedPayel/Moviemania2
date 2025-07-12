@@ -1,88 +1,91 @@
 .person-page {
-  max-width: 900px;
-  margin: 2rem auto;
-  padding: 1.5rem;
-  background-color: #b82b2b;
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
-  border-radius: 12px;
-  font-family: 'Segoe UI', sans-serif;
-}
-
-.person-header {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-  margin-bottom: 2rem;
-  border-bottom: 1px solid #ee2323;
-  padding-bottom: 1rem;
-}
-
-.person-photo {
-  width: 180px;
-  height: auto;
-  border-radius: 10px;
-  object-fit: cover;
-}
-
-.person-details {
-  flex: 1;
-}
-
-.person-details h2 {
-  margin: 0;
-  font-size: 2rem;
+  max-width: 800px;
+  margin: 3rem auto;
+  padding: 2rem 2.5rem;
+  background: #099bdf;
+  border-radius: 16px;
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.07);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
 }
 
-.person-details p {
-  margin: 0.5rem 0;
-  color: #555;
-  font-size: 1rem;
-}
-
-.movie-list-section {
-  margin-top: 2rem;
-}
-
-.movie-list-section h3 {
-  font-size: 1.5rem;
+.person-page h1 {
+  font-size: 2.8rem;
   margin-bottom: 1rem;
-  color: #222;
-  border-bottom: 2px solid #ddd;
-  padding-bottom: 0.5rem;
+  color: #b82b2b;
+  text-align: center;
+  letter-spacing: 1.2px;
 }
 
-.movie-list {
+.person-photo {
+  display: block;
+  width: 220px;
+  height: 280px;
+  margin: 0 auto 1.5rem auto;
+  border-radius: 16px;
+  object-fit: cover;
+  box-shadow: 0 6px 20px rgba(184, 43, 43, 0.25);
+  transition: transform 0.3s ease;
+}
+
+.person-photo:hover {
+  transform: scale(1.05);
+}
+
+.person-page p {
+  font-size: 1.1rem;
+  margin: 0.4rem 0;
+  text-align: center;
+  color: #555;
+}
+
+.person-page p strong {
+  color: #b82b2b;
+  font-weight: 700;
+}
+
+.person-page h2 {
+  font-size: 2rem;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  color: #b82b2b;
+  border-bottom: 3px solid #f08080;
+  padding-bottom: 0.5rem;
+  letter-spacing: 0.8px;
+  text-align: center;
+}
+
+.person-movie-list {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.movie-item {
-  margin-bottom: 1rem;
-  padding: 0.75rem 1rem;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-  transition: background-color 0.2s ease;
+.person-movie-list li {
+  padding: 1rem 1.5rem;
+  margin-bottom: 1.25rem;
+  border-radius: 12px;
+  background-color: #fafafa;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.movie-item:hover {
-  background-color: #f0f0f0;
+.person-movie-list li:hover {
+  background-color: #fff4f4;
+  box-shadow: 0 6px 20px rgba(184, 43, 43, 0.2);
+  cursor: pointer;
 }
 
-.movie-item a {
-  font-weight: 600;
-  text-decoration: none;
-  color: #0077cc;
+.person-movie-list strong {
+  font-weight: 700;
+  color: #b82b2b;
+  font-size: 1.1rem;
 }
 
-.movie-item a:hover {
-  text-decoration: underline;
-}
-
-.role-description {
+.person-movie-list em {
   font-style: italic;
-  color: #666;
-  margin-left: 8px;
+  color: #777;
+  font-size: 0.95rem;
+  display: block;
+  margin-top: 0.3rem;
 }
