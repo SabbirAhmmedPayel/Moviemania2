@@ -152,6 +152,39 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+// DELETE a specific watchlist by ID (for a given user)
+router.delete('/user/:username/watchlist/:id', async (req, res) => {
+  const { username, id } = req.params;
+
+  try {
+    // Check if the watchlist belongs to the user
+    const check = await pool.query(
+      'SELECT * FROM watchlists WHERE id = $1 AND username = $2',
+      [id, username]
+    );
+
+    if (check.rows.length === 0) {
+      return res.status(404).json({ error: 'Watchlist not found for this user' });
+    }
+
+    // First delete all related entries from watchlist_movies (foreign key constraint)
+    await pool.query(
+      'DELETE FROM watchlist_movies WHERE watchlist_id = $1',
+      [id]
+    );
+
+    // Then delete the watchlist itself
+    await pool.query(
+      'DELETE FROM watchlists WHERE id = $1 AND username = $2',
+      [id, username]
+    );
+
+    res.json({ message: 'Watchlist and its movies deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting watchlist:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 
 
 module.exports = router;

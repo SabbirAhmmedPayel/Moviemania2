@@ -30,22 +30,11 @@ function Home() {
           </a>
         </small>
 
-        <div className="friend-sites">
-          <h4>🎬 Friend Websites:</h4>
-          <ul>
-            <li><a href="https://yts.mx" target="_blank">YTS</a></li>
-            <li><a href="https://opensubtitles.org" target="_blank">OPENSUBS</a></li>
-            <li><a href="https://netflix.com" target="_blank">Netflix</a></li>
-          </ul>
-        </div>
-
+       
+ <TopUsers></TopUsers>
       
         
-        <div className="youtube-link">
-          <a href="https://youtube.com" target="_blank">
-            📺 Follow our YouTube Channel
-          </a>
-        </div>
+       
       </div>
     </div>
   );

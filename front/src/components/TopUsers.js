@@ -1,16 +1,22 @@
-// src/components/TopUsers.js
-import React from 'react';
-import '../styles/TopUsers.css';
+import React, { useEffect, useState } from 'react';
+import "../styles/TopUsers.css";
 
-const dummyUsers = [
-  { username: 'Kim', reviews: Math.floor(Math.random() * 50 + 10) },
-  { username: 'Alex', reviews: Math.floor(Math.random() * 50 + 10) },
-  { username: 'Nina', reviews: Math.floor(Math.random() * 50 + 10) },
-  { username: 'Jay', reviews: Math.floor(Math.random() * 50 + 10) },
-  { username: 'Sam', reviews: Math.floor(Math.random() * 50 + 10) },
-];
 
 function TopUsers() {
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('http://localhost:3000/api/reviews/top-users')
+      .then(res => res.json())
+      .then(data => setUsers(data))
+      .catch(err => console.error(err))
+      .finally(() => setLoading(false));
+  }, []);
+
+  if (loading) return <p>Loading top users...</p>;
+  if (!users.length) return <p>No top users found.</p>;
+
   return (
     <div className="top-users-card">
       <h2>🏆 Top Users</h2>
@@ -22,10 +28,10 @@ function TopUsers() {
           </tr>
         </thead>
         <tbody>
-          {dummyUsers.map((user, index) => (
-            <tr key={index}>
-              <td>{user.username}</td>
-              <td>{user.reviews}</td>
+          {users.map(({ username, review_count }, i) => (
+            <tr key={i}>
+              <td>{username}</td>
+              <td>{review_count}</td>
             </tr>
           ))}
         </tbody>

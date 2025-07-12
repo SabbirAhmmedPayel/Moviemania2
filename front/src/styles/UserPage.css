@@ -13,6 +13,21 @@
   padding: 0;
 }
 
+.delete-watchlist-btn {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.delete-watchlist-btn:hover {
+  background-color: #c0392b;
+}
+
 .watchlist-links li {
   margin: 0.5rem 0;
 }

@@ -9,7 +9,7 @@ function MovieList({ movies }) {
   const [yearMax, setYearMax] = useState("");
 
   if (!movies || movies.length === 0) {
-    return <p className="no-movies">Loading...</p>;
+    return <p className="no-movies">No movies found..</p>;
   }
 
   // Filter by year range

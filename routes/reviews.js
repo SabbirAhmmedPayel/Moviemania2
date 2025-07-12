@@ -93,4 +93,46 @@ router.get('/user/:username', async (req, res) => {
   }
 });
 
+// GET: Total number of reviews by a user
+router.get('/user/:username/count', async (req, res) => {
+  const { username } = req.params;
+
+  try {
+    const result = await pool.query(
+      `SELECT COUNT(*) AS total_reviews
+       FROM "Reviews"
+       WHERE username = $1`,
+      [username]
+    );
+
+    // result.rows[0].total_reviews is a string, so convert to number
+    const totalReviews = parseInt(result.rows[0].total_reviews, 10);
+
+    res.json({ username, totalReviews });
+  } catch (err) {
+    console.error('Error fetching reviews count:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
+// In your reviewRoutes.js or wherever you handle reviews routes:
+
+router.get('/top-users', async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT username, COUNT(*) AS review_count
+      FROM "Reviews"
+      GROUP BY username
+      ORDER BY review_count DESC
+      LIMIT 10
+    `);
+    res.json(result.rows);
+  } catch (err) {
+    console.error('Error fetching top users:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
 module.exports = router;
