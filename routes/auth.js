@@ -3,6 +3,8 @@ const router = express.Router();
 const { signup } = require('../services/signup');   // adjust path as needed
 const { signin } = require('../services/signin');   // if you have signIn function
 
+
+
 // Signup route
 router.post('/signup', async (req, res) => {
   const { username, name, email, birthDate, password } = req.body;

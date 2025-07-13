@@ -26,6 +26,7 @@ function MovieDetails() {
   const { id } = useParams();
   const { loggedInUser } = useUser();
   const [showRateForm, setShowRateForm] = useState(false);
+const [userReview, setUserReview] = useState(null);
 
 
   // State hooks - always at top level!
@@ -64,6 +65,26 @@ function MovieDetails() {
     }
     fetchMovie();
   }, [id]);
+
+
+useEffect(() => {
+  async function fetchUserReview() {
+    if (!loggedInUser) return;
+
+    try {
+      const res = await fetch(`http://localhost:3000/api/reviews/movie/${id}/user/${loggedInUser.username}`);
+      if (res.ok) {
+        const data = await res.json();
+        if (data) setUserReview(data); // If review exists
+      }
+    } catch (err) {
+      console.error('Failed to load user review:', err);
+    }
+  }
+
+  fetchUserReview();
+}, [loggedInUser, id]);
+
 
   // Fetch user watchlists
   useEffect(() => {
@@ -118,6 +139,31 @@ function MovieDetails() {
     }
   };
 
+
+  const handleDeleteReview = async () => {
+  if (!window.confirm('Are you sure you want to delete your review?')) return;
+
+  try {
+    const res = await fetch(`http://localhost:3000/api/reviews/movie/${movie.id}/user/${loggedInUser.username}`, {
+      method: 'DELETE',
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      alert(data.message || 'Review deleted.');
+      setUserReview(null);
+      setSelectedRating(0);
+      setTextReview('');
+    } else {
+      alert(data.error || 'Failed to delete review');
+    }
+  } catch (err) {
+    console.error('Error deleting review:', err);
+    alert('Error deleting review');
+  }
+};
+
+
   const handleSubmitReview = async () => {
     if (selectedRating === 0) return alert("Please select a rating.");
 
@@ -139,6 +185,7 @@ function MovieDetails() {
         setShowRateForm(false) ;
         setSelectedRating(0);
         setTextReview('');
+        setUserReview(data.review); 
       } else {
         alert(data.error || 'Failed to submit review');
       }
@@ -152,6 +199,8 @@ function MovieDetails() {
   if (loading) return <p>Loading movie details...</p>;
   if (error) return <p>Error: {error}</p>;
   if (!movie) return <p>No movie data found.</p>;
+
+  console.log('userReview:', userReview);
 
   return (
     <div className="movie-details">
@@ -288,6 +337,20 @@ function MovieDetails() {
       />
 
       <button onClick={handleSubmitReview}>Submit Review</button>
+   
+
+   
+    {userReview && (
+      <button
+        onClick={handleDeleteReview}
+        className="delete-review-button"
+        style={{ backgroundColor: '#e74c3c', color: 'white', marginLeft: '1rem', marginTop: '0.5rem' }}
+      >
+        🗑️ Delete Your current Review
+      </button>
+    )}
+   
+   
     </div>
   )}
 </div>
@@ -297,7 +360,7 @@ function MovieDetails() {
 
       <div className="movie-links">
         <a href={`/movies/${movie.id}/reviews`} className="details-link">📝 Check Reviews</a>
-        <a href={`/movies/${movie.id}/similar`} className="details-link">🎞️ Similar Movies</a>
+       
       </div>
     </div>
   );

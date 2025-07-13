@@ -135,4 +135,47 @@ router.get('/top-users', async (req, res) => {
 });
 
 
+// GET: Review by user and movie
+router.get('/movie/:movieId/user/:username', async (req, res) => {
+  const { movieId, username } = req.params;
+
+  try {
+    const result = await pool.query(
+      `SELECT * FROM "Reviews" WHERE movie_id = $1 AND username = $2`,
+      [movieId, username]
+    );
+
+    if (result.rows.length > 0) {
+      res.json(result.rows[0]);
+    } else {
+      res.status(404).json(null); // No review found
+    }
+  } catch (err) {
+    console.error('Error fetching review:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
+// DELETE review by user and movie
+router.delete('/movie/:movieId/user/:username', async (req, res) => {
+  const { movieId, username } = req.params;
+
+  try {
+    const result = await pool.query(
+      `DELETE FROM "Reviews" WHERE movie_id = $1 AND username = $2 RETURNING *`,
+      [movieId, username]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: 'Review not found' });
+    }
+
+    res.json({ message: 'Review deleted successfully' });
+  } catch (err) {
+    console.error('Error deleting review:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 module.exports = router;
